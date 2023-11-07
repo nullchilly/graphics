@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>three.js webgl - geometry - cube</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script type="module">
+
+  //-------- ----------
+  // SCENE, CAMERA, RENDERER
+  //-------- ----------
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x808080)
+  const camera = new THREE.PerspectiveCamera(60, 320 / 240, 0.1, 1000);
+  const renderer = new THREE.WebGL1Renderer();
+  renderer.setSize(640, 480, false);
+  (document.getElementById('demo') || document.body).appendChild(renderer.domElement);
+  //-------- ----------
+  // POINTS - Using THREE.TorusGeometry and PointsMaterial
+  //-------- ----------
+  const radius = 1,
+    tubeRadius = 0.25,
+    radialSegments = 40,
+    tubeSegments = 40;
+  const doughnut = new THREE.Points(
+    new THREE.TorusGeometry(
+      radius, tubeRadius,
+      radialSegments, tubeSegments),
+    new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0x00ff00
+    }));
+  scene.add(doughnut); // add mesh to scene
+  //-------- ----------
+  // RENDER
+  //-------- ----------
+  camera.position.set(1.5, 1.5, 1.5);
+  camera.lookAt(0, 0.25, 0);
+  renderer.render(scene, camera);
+
+  animate()
+
+  function animate() {
+
+    requestAnimationFrame( animate );
+
+    doughnut.rotation.x += 0.005;
+    doughnut.rotation.y += 0.01;
+
+    renderer.render( scene, camera );
+
+  }
+
+
+</script>
+
+</body>
+</html>
